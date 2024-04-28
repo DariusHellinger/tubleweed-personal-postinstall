@@ -23,5 +23,16 @@ sudo zypper ref
 sudo zypper in vlc vlc-codecs
 sudo zypper dup --from packman --allow-vendor-change
 
+#better bash
+returnDirectory=$PWD
+cd ~
+cp .bashrc .bashrc.bckp
+cd returnDirectory
+sudo zypper install --no-confirm git fonts-powerline
+git clone --recursive https://github.com/andresgongora/synth-shell.git
+chmod +x synth-shell/setup.sh
+cd synth-shell
+./setup.sh
+
 #launching spotfy installer
 spotify-easyrpm --quiet
