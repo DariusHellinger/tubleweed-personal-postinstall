@@ -1,9 +1,12 @@
 #!/bin/bash
 
+##############
 #system basics
+##############
 
 sudo zypper install --no-confirm flatpak curl distrobox
 
+#add flathub repo
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 #installing brave
@@ -34,5 +37,28 @@ chmod +x synth-shell/setup.sh
 cd synth-shell
 ./setup.sh
 
+cd $returnDirectory
+
+##################
+#move config files
+##################
+
+#synth-shell
+cp ./synth-shell-greeter.config ~/.config/synth-shell/synth-shell-greeter.config
+cp ./synth-shell-prompt.config ~/.config/synth-shell/synth-shell-prompt.config
+cp ./synth-shell-prompt-root.config ~/.config/synth-shell/synth-shell-prompt-root.config
+
+#KDE colors
+cp ./BreezeDarkTinted.colors /home/testy/.local/share/color-schemes/BreezeDarkTinted.colors
+plasma-apply-colorschemes BreezeDarkTinted
+#KDE shortcuts
+cp ./kglobalshortcutsrc ~/.config/kglobalshortcutsrc
+
 #launching spotfy installer
 spotify-easyrpm --quiet
+
+#setup distrobox with ubuntu and enable docker
+
+sudo systemctl start docker
+sudo systemctl enable docker
+distrobox-create --root -l quay.io/toolbx/ubuntu-toolbox:latest -n Ubuntu
